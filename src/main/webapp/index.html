@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cross origin interoperability test</title>
+    <!--
+    <link rel="stylesheet" type="text/css" href="lib/css/jasmine.css">
+    -->
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+</head>
+<body>
+<div id="configuration">
+    <label for="origin">Origin: </label><input id="origin" value="http://localhost:8080" />
+    <label for="endpoint">Endpoint: </label><input id="endpoint" value="http://localhost:8080" />
+    <label for="CSP">CSP: </label><textarea id="CSP"></textarea>
+    <input id="start" type="button" value="Start" />
+    <input id="reset" type="button" value="Reset" />
+</div>
+<div id="test-cases">
+    <div id="JSON"><a href="http://en.wikipedia.org/wiki/JSON">JSON</a></div>
+    <div id="JSONP"><a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a></div>
+    <div id="JSON-CORS"><a href="http://en.wikipedia.org/wiki/Cross-origin_resource_sharing">Cross-origin_resource_sharing (CORS)</a></div>
+    <div id="JSON-POSTMESSAGES"><a href="http://en.wikipedia.org/wiki/Cross-document_messaging">Cross-document_messaging (postMessage)</a></div>
+    <div id="IMAGE">Image</div>
+    <div id="IMAGE-REDIRECT">Image thought a redirect</div>
+    <div id="COOKIE">Cookie</div>
+    <div id="COOKIE-DOMAIN">Cookie with domain set</div>
+</div>
+</body>
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/jquery.cookie.js"></script>
+<!--
+<script src="lib/js/jasmine.js"></script>
+<script src="lib/js/jasmine-html.js"></script>
+-->
+<script src="js/server.js"></script>
+</html>
