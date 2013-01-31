@@ -1,7 +1,10 @@
 
 $().ready(function() {
     reset();
+    $("#origin").val(document.location);
+    
 });
+
 
 $('#reset').click(function() {
     reset();
@@ -17,7 +20,8 @@ $('#start').click(function() {
     IMAGE(endpoint() + '/server/image/redirect/', '#IMAGE-REDIRECT');
 
     COOKIE(endpoint() + '/server/cookie/', '#COOKIE', 'DATA');
-    COOKIE(endpoint() + '/server/cookie/?domain=' + origin(), '#COOKIE-DOMAIN', 'MYDATA');
+    COOKIE(endpoint() + '/server/cookie/?domain=' + origin(), '#COOKIE-THIRD-PARTY', 'MYDATA');
+    POSTMESSAGE(endpoint()+'/server/postmessage/?origin=' +origin(), '#JSON-POSTMESSAGES');
 });
 
 function COOKIE(url, id, name) {
@@ -27,6 +31,23 @@ function COOKIE(url, id, name) {
         showResult(id, function() {return data.payload == 'hello';});
     });
     $(id).append(img);
+}
+
+
+function POSTMESSAGE(url, id){
+	
+	function receiveMessage(event){
+		console.log('parent received message:  ',event.data);
+		showResult(id, function() {return event.data.payload == 'hello';});
+	}
+	
+	window.addEventListener("message", receiveMessage, false);
+
+	
+	
+	var iframe=$("<iframe src='"+url+"' style='display:none'></iframe>");
+
+	$(id).append(iframe);
 }
 
 function reset() {

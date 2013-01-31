@@ -44,8 +44,8 @@ public class CookieController {
         if (StringUtils.hasText(domain)) {
             LOGGER.info("Cookie called, domain is {}", domain);
             cookie = new Cookie("MYDATA", PAYLOAD);
-            //TODO: set the domanin part of the origin
-            cookie.setDomain("TODO");
+            //TODO: set the domain part of the origin
+            cookie.setDomain(domain);
         } else {
             cookie = new Cookie("DATA", PAYLOAD);
             LOGGER.info("Cookie called");
