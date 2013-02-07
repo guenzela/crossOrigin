@@ -16,5 +16,5 @@ public class RootConfig {
 		ppc.setLocation(new ClassPathResource("/server.properties"));
 		return ppc;
 	}
-	
+
 }

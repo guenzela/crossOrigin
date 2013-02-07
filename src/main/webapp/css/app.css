@@ -1,3 +1,7 @@
 .unknown {background-color: #bbbbbb;}
 .success {background-color: green;}
 .failure {background-color: red;}
+
+#csp-tests ul{
+		margin: 0px;
+}

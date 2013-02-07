@@ -1,28 +1,57 @@
 
 $().ready(function() {
     reset();
-    $("#origin").val(document.location);
+    $("#origin").val(document.location.href);
     
 });
 
 
 $('#reset').click(function() {
     reset();
+    resetHeaders();
 });
 
 $('#start').click(function() {
     reset();
-    JSON(endpoint() + '/server/json/', '#JSON');
-    JSON(endpoint() + '/server/json/?origin=' +origin(), '#JSON-CORS');
-    JSON(endpoint() + '/server/jsonp/?callback=?', '#JSONP');
+    
+    JSON(endpoint() + 'server/json/', '#JSON');
+    JSON(endpoint() + 'server/json/?origin=' +origin(), '#JSON-CORS');
+    JSON(endpoint() + 'server/jsonp/?callback=?', '#JSONP');
 
-    IMAGE(endpoint() + '/server/image/', '#IMAGE');
-    IMAGE(endpoint() + '/server/image/redirect/', '#IMAGE-REDIRECT');
+    IMAGE(endpoint() + 'server/image/', '#IMAGE');
+    IMAGE(endpoint() + 'server/image/redirect/', '#IMAGE-REDIRECT');
 
-    COOKIE(endpoint() + '/server/cookie/', '#COOKIE', 'DATA');
-    COOKIE(endpoint() + '/server/cookie/?domain=' + origin(), '#COOKIE-THIRD-PARTY', 'MYDATA');
-    POSTMESSAGE(endpoint()+'/server/postmessage/?origin=' +origin(), '#JSON-POSTMESSAGES');
+    COOKIE(endpoint() + 'server/cookie/', '#COOKIE', 'DATA');
+    COOKIE(endpoint() + 'server/cookie/?domain=' + origin(), '#COOKIE-THIRD-PARTY', 'MYDATA');
+    POSTMESSAGE(endpoint()+'server/postmessage/?origin=' +origin(), '#JSON-POSTMESSAGES');
+    
 });
+
+$('#setHeader').click(function(){
+	
+	SETCSP(origin()+'server/headers/');
+	
+	if(origin()!=endpoint())
+		SETCSP(endpoint()+'server/headers/');
+});
+
+function COPYCSP(cspHeader){
+	$('#CSP').val($('#CSP').val()+cspHeader);
+}
+
+function SETCSP(url){
+	
+	var name=$('#reportCSP:checked').length?"X-Content-Security-Policy-Report-Only":"X-Content-Security-Policy";
+	
+	//var json='[{"name":"X-Content-Security-Policy", "value":"img-src \'self\'"},{"name":"X-Content-Security-Policy", "value":"script-src \'self\'"}]';
+	var headers=cspParameters().split("\n");
+	var headerValue="";
+	for (var i=0; i<headers.length;i++) {
+		headerValue+=" "+headers[i]+";";
+	}
+	
+	$.post(url,{'headers':'[{"name":"'+name+'", "value":"'+headerValue+'"}]'});
+}
 
 function COOKIE(url, id, name) {
     var img = $("<img src='"+url+"' style='display:none' width='0' height='0' tabindex='-1' title='empty'></img>");
@@ -42,7 +71,6 @@ function POSTMESSAGE(url, id){
 	}
 	
 	window.addEventListener("message", receiveMessage, false);
-
 	
 	
 	var iframe=$("<iframe src='"+url+"' style='display:none'></iframe>");
@@ -54,12 +82,20 @@ function reset() {
     $('#test-cases div').removeClass().addClass('unknown');
 }
 
+function resetHeaders(){
+	$.get(origin()+"server/headers/reset/");
+    $.get(endpoint()+"server/headers/reset/");
+}
 function endpoint() {
     return $('#endpoint').val();
 }
 
 function origin() {
     return $('#origin').val();
+}
+
+function cspParameters(){
+	return $('#CSP').val();
 }
 
 function IMAGE(url, id) {
