@@ -66,7 +66,6 @@ function COOKIE(url, id, name) {
 function POSTMESSAGE(url, id){
 	
 	function receiveMessage(event){
-		console.log('parent received message:  ',event.data);
 		showResult(id, function() {return event.data.payload == 'hello';});
 	}
 	
@@ -121,6 +120,7 @@ function IMAGE(url, id) {
 }
 
 function JSON(endPoint, id) {
+
     $.getJSON(endPoint, function(data) {
         showResult(id, function() {return data.payload == 'hello';});
     }).error(function() {

@@ -26,8 +26,7 @@ public class PostmessageController {
     @ResponseBody
     public String postmessage(@RequestParam(required = false) String origin, HttpServletRequest request, HttpServletResponse response) throws IOException {
         LOGGER.info("Postmessage called");
-        //LOGGER.info("set CSP");
-        //response.setHeader("X-Content-Security-Policy", "frame-src 'self'; script-src 'self'");
+
         return "<script type='text/javascript'> window.parent.postMessage("+PAYLOAD+",'"+origin+"');</script>";
     }
 

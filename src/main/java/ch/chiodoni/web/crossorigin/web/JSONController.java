@@ -1,5 +1,6 @@
 package ch.chiodoni.web.crossorigin.web;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -19,13 +20,15 @@ public class JSONController {
 
     public static final String PAYLOAD = "{\"payload\": \"hello\"}";
 
+    
     @RequestMapping(value = "json/", method = RequestMethod.GET)
     @ResponseBody
-    public String JSON(@RequestParam(required = false) String origin, HttpServletResponse response) {
+    public String JSON(@RequestParam(required = false) String origin, HttpServletResponse response, HttpServletRequest request) {
         if (StringUtils.hasText(origin)) {
             LOGGER.info("Adding COSR header for {}", origin);
+            
             //TODO: CORS: here we open it to every origin
-            response.setHeader("Access-Control-Allow-Origin", origin);
+            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         }
         LOGGER.info("JSON called");
         response.setContentType("application/json");
