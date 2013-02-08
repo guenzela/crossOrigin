@@ -24,26 +24,26 @@ public class HeadersController {
 	
     @RequestMapping(value = "/headers/", method = RequestMethod.GET)
     @ResponseBody
-    public HeadersHolder getHeaders() {
-        return headersHolder;
+    public List<Header> getHeaders() {
+        return headersHolder.getHeaders();
     }
 	
     @RequestMapping(value = "/headers/", method = RequestMethod.POST)
     @ResponseBody
-    public HeadersHolder setHeaders(@RequestParam(required=true) String headers) throws JsonParseException, JsonMappingException, IOException {
+    public List<Header> setHeaders(@RequestParam(required=true) String headers) throws JsonParseException, JsonMappingException, IOException {
     	//headers: JSON array of headerName and headerValue
     	List<Header> headerList = mapper.readValue(headers, new TypeReference<List<Header>>(){});
     	headersHolder.add(headerList);
 
-        return headersHolder;
+        return headersHolder.getHeaders();
     }
 
     
     @RequestMapping(value = "/headers/reset/", method = RequestMethod.GET)
     @ResponseBody
-    public HeadersHolder reset() {
+    public List<Header> reset() {
     	headersHolder.reset();
-        return headersHolder;
+        return headersHolder.getHeaders();
     }
 
 }

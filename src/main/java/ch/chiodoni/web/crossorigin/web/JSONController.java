@@ -27,7 +27,6 @@ public class JSONController {
         if (StringUtils.hasText(origin)) {
             LOGGER.info("Adding COSR header for {}", origin);
             
-            //TODO: CORS: here we open it to every origin
             response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         }
         LOGGER.info("JSON called");

@@ -12,7 +12,7 @@
 <body>
 <div id="configuration">
     <label for="origin">Origin: </label><input id="origin" value="" />
-    <label for="endpoint">Endpoint: </label><input id="endpoint" value="http://env-4436101.j.layershift.co.uk/crossOrigin/" />
+    <label for="endpoint">Endpoint: </label><input id="endpoint" value="http://env-0159192.j.layershift.co.uk/crossOrigin/server/" />
     
     <label for="CSP">CSP: </label>
     <textarea id="CSP" rows="3" cols="60"></textarea>
@@ -41,7 +41,10 @@
 		<b>CSP tests: </b> below are a few sample csp-header configurations that are of testing interest 
 	</div>
 	<ul>
-		<li>This settings should break the image cross-origin loading - - <b>default-src 'none'; img-src 'self'</b> <input type="button" value="setHeader" onclick="COPYCSP('default-src \'none\' \nimg-src \'self\'')"></li>
+		<li>This settings should break the image cross-origin loading - - <b>default-src *; img-src 'self'</b> <input type="button" value="setHeader" onclick="COPYCSP('default-src *\nimg-src \'self\'')"></li>
+		<li>
+			<a href="/invalidate-session">Invalidate session</a>
+		</li>
 	</ul>
 		
 </div>

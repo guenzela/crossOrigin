@@ -9,30 +9,32 @@ $().ready(function() {
 $('#reset').click(function() {
     reset();
     resetHeaders();
+    document.location="invalidate-session";
 });
 
 $('#start').click(function() {
     reset();
     
-    JSON(endpoint() + 'server/json/', '#JSON');
-    JSON(endpoint() + 'server/json/?origin=' +origin(), '#JSON-CORS');
-    JSON(endpoint() + 'server/jsonp/?callback=?', '#JSONP');
+    JSON(endpoint() + 'json/', '#JSON');
+    JSON(endpoint() + 'json/?origin=' +origin(), '#JSON-CORS');
+    JSON(endpoint() + 'jsonp/?callback=?', '#JSONP');
 
-    IMAGE(endpoint() + 'server/image/', '#IMAGE');
-    IMAGE(endpoint() + 'server/image/redirect/', '#IMAGE-REDIRECT');
+    IMAGE(endpoint() + 'image/', '#IMAGE');
+    IMAGE(endpoint() + 'image/redirect/', '#IMAGE-REDIRECT');
 
-    COOKIE(endpoint() + 'server/cookie/', '#COOKIE', 'DATA');
-    COOKIE(endpoint() + 'server/cookie/?domain=' + origin(), '#COOKIE-THIRD-PARTY', 'MYDATA');
-    POSTMESSAGE(endpoint()+'server/postmessage/?origin=' +origin(), '#JSON-POSTMESSAGES');
+    COOKIE(endpoint() + 'cookie/', '#COOKIE', 'DATA');
+    COOKIE(endpoint() + 'cookie/?domain=' + origin(), '#COOKIE-THIRD-PARTY', 'MYDATA');
+    POSTMESSAGE(endpoint()+'postmessage/?origin=' +origin(), '#JSON-POSTMESSAGES');
     
 });
 
 $('#setHeader').click(function(){
 	
-	SETCSP(origin()+'server/headers/');
+	SETCSP(origin()+'headers/');
 	
 	if(origin()!=endpoint())
-		SETCSP(endpoint()+'server/headers/');
+		SETCSP(endpoint()+'headers/');
+	
 });
 
 function COPYCSP(cspHeader){
@@ -50,7 +52,7 @@ function SETCSP(url){
 		headerValue+=" "+headers[i]+";";
 	}
 	
-	$.post(url,{'headers':'[{"name":"'+name+'", "value":"'+headerValue+'"}]'});
+	$.post(url,{'headers':'[{"name":"'+name+'", "value":"'+headerValue+'"}]'}, function(){location.reload(true);});
 }
 
 function COOKIE(url, id, name) {
@@ -82,8 +84,8 @@ function reset() {
 }
 
 function resetHeaders(){
-	$.get(origin()+"server/headers/reset/");
-    $.get(endpoint()+"server/headers/reset/");
+	$.get(origin()+"headers/reset/");
+    $.get(endpoint()+"headers/reset/");
 }
 function endpoint() {
     return $('#endpoint').val();

@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 @Component
@@ -16,16 +17,17 @@ public class SetHttpHeaderInterceptor extends HandlerInterceptorAdapter {
 	
 	@Autowired
 	private HeadersHolder headersHolder;
-
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		
 		LOGGER.info("setting headers");
-		LOGGER.info("headers : "+headersHolder.getHeaders().size());
 		for (Header header : headersHolder.getHeaders()) {
 			((HttpServletResponse) response).setHeader(header.getName(), header.getValue());
 		}
+		
+	
 		return true;
 	}
 
